@@ -1,16 +1,18 @@
 # revenuecat-mcp
 
-**Ask your AI agent about your MRR. In plain English.**
+**The analytics layer RevenueCat's official MCP is missing.**
 
-An MCP (Model Context Protocol) server that connects [RevenueCat's Charts API](https://www.revenuecat.com/docs/api-v2) to any AI agent — Claude, Cursor, Windsurf, and more.
+RevenueCat's [official MCP server](https://www.revenuecat.com/blog/company/introducing-revenuecat-mcp/) (launched July 2025) gives you 26 tools to *build* your subscription infrastructure from the terminal. It has zero tools to *understand* it.
 
-Instead of logging into the RevenueCat dashboard, you can ask:
+This server fills that gap. It connects [RevenueCat's Charts API](https://www.revenuecat.com/docs/api-v2) to any AI agent — Claude, Cursor, Windsurf, and more — so instead of logging into the dashboard, you can ask:
 
 > *"How is my MRR trending over the last 6 months?"*
-> *"What's my current churn rate?"*
+> *"What's my current churn rate and is it healthy?"*
 > *"Run a full subscription health check."*
 
 And get a real answer, backed by live data.
+
+> **Why this matters now:** RevenueCat's 2026 State of Subscription Apps found AI-powered apps earn **41% more per user** but churn **30% faster**. If you're building an AI app, analytics visibility isn't optional.
 
 ---
 
