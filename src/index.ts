@@ -120,27 +120,37 @@ async function getChart(
   )) as ChartData;
 
   const currency_prefix = data.yaxis_currency ? `${data.yaxis_currency} ` : "";
+
+  function formatValue(val: number | Record<string, number>): string {
+    if (typeof val === "number") return `${currency_prefix}${val.toFixed(2)}`;
+    return Object.entries(val)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 10)
+      .map(([k, n]) => `\n      ${k}: ${currency_prefix}${typeof n === "number" ? n.toFixed(2) : n}`)
+      .join("");
+  }
+
+  function formatSummaryVal(val: unknown): string {
+    if (typeof val === "number") return val.toFixed(2);
+    if (typeof val === "object" && val !== null) {
+      return Object.entries(val as Record<string, unknown>)
+        .map(([k, v]) => `${k}: ${typeof v === "number" ? v.toFixed(2) : v}`)
+        .join(", ");
+    }
+    return String(val);
+  }
+
   const values = data.values
     .slice(-12)
     .map((v) => {
       const date = new Date(v.cohort * 1000).toISOString().split("T")[0];
-      if (v.incomplete) return null;
-      if (typeof v.value === "object" && v.value !== null) {
-        const segments = Object.entries(v.value)
-          .sort(([, a], [, b]) => b - a)
-          .slice(0, 10)
-          .map(([k, n]) => `    ${k}: ${currency_prefix}${n.toFixed(2)}`)
-          .join("\n");
-        return `  ${date}:\n${segments}`;
-      }
-      const val = v.value.toFixed(2);
-      return `  ${date}: ${currency_prefix}${val}`;
+      const incomplete = v.incomplete ? " ⚠️ (incomplete)" : "";
+      return `  ${date}: ${formatValue(v.value)}${incomplete}`;
     });
 
   const summaryLines = Object.entries(data.summary).flatMap(([key, vals]) =>
-    Object.entries(vals as Record<string, number>).map(
-      ([metric, val]) =>
-        `  ${key} ${metric}: ${typeof val === "number" ? val.toFixed(2) : val}`
+    Object.entries(vals as Record<string, unknown>).map(
+      ([metric, val]) => `  ${key} ${metric}: ${formatSummaryVal(val)}`
     )
   );
 
