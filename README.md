@@ -54,7 +54,7 @@ Add to your `claude_desktop_config.json`:
   "mcpServers": {
     "revenuecat": {
       "command": "npx",
-      "args": ["-y", "revenuecat-mcp"]
+      "args": ["-y", "revenuecat-analytics-mcp"]
     }
   }
 }

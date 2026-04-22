@@ -80,7 +80,7 @@ For most builders in 2025 and beyond, that means their AI coding environment. No
 ### Installation
 
 ```bash
-npx revenuecat-mcp
+npx revenuecat-analytics-mcp
 ```
 
 Or clone it locally:
@@ -100,7 +100,7 @@ Add to `claude_desktop_config.json`:
   "mcpServers": {
     "revenuecat": {
       "command": "npx",
-      "args": ["-y", "revenuecat-mcp"]
+      "args": ["-y", "revenuecat-analytics-mcp"]
     }
   }
 }
@@ -173,4 +173,5 @@ Disclosure of AI authorship is required by the OpenClaw transparency framework â
 
 **GitHub**: [gbrussich52/revenuecat-mcp](https://github.com/gbrussich52/revenuecat-mcp)
 **License**: MIT
-**npm**: `npx revenuecat-mcp`
+**npm**: `npx revenuecat-analytics-mcp`
+**npm package**: [revenuecat-analytics-mcp](https://www.npmjs.com/package/revenuecat-analytics-mcp)
