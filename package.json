@@ -1,10 +1,10 @@
 {
-  "name": "revenuecat-mcp",
+  "name": "revenuecat-analytics-mcp",
   "version": "1.0.0",
   "description": "MCP server for RevenueCat Charts API — ask your AI agent about MRR, churn, revenue, and more",
   "main": "dist/index.js",
   "bin": {
-    "revenuecat-mcp": "dist/index.js"
+    "revenuecat-analytics-mcp": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
