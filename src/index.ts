@@ -36,7 +36,7 @@ interface OverviewMetric {
 
 interface ChartValue {
   cohort: number;
-  value: number;
+  value: number | Record<string, number>;
   incomplete: boolean;
   measure?: number;
 }
@@ -121,11 +121,20 @@ async function getChart(
 
   const currency_prefix = data.yaxis_currency ? `${data.yaxis_currency} ` : "";
   const values = data.values
-    .slice(-12) // last 12 data points for readability
+    .slice(-12)
     .map((v) => {
       const date = new Date(v.cohort * 1000).toISOString().split("T")[0];
-      const val = typeof v.value === "number" ? v.value.toFixed(2) : v.value;
-      return `  ${date}: ${currency_prefix}${val}${v.incomplete ? " ⚠️ (incomplete)" : ""}`;
+      if (v.incomplete) return null;
+      if (typeof v.value === "object" && v.value !== null) {
+        const segments = Object.entries(v.value)
+          .sort(([, a], [, b]) => b - a)
+          .slice(0, 10)
+          .map(([k, n]) => `    ${k}: ${currency_prefix}${n.toFixed(2)}`)
+          .join("\n");
+        return `  ${date}:\n${segments}`;
+      }
+      const val = v.value.toFixed(2);
+      return `  ${date}: ${currency_prefix}${val}`;
     });
 
   const summaryLines = Object.entries(data.summary).flatMap(([key, vals]) =>
@@ -140,7 +149,7 @@ async function getChart(
     `**Resolution:** ${data.resolution} | **Period:** ${startDate} → ${endDate}`,
     ``,
     `**Recent values (last 12 periods):**`,
-    ...values,
+    ...values.filter(Boolean),
     ``,
     summaryLines.length > 0
       ? `**Summary:**\n${summaryLines.join("\n")}`
@@ -202,20 +211,20 @@ async function analyzeHealth(
   const mrrValues = mrrData.values.filter((v) => !v.incomplete);
   const mrrTrend =
     mrrValues.length >= 2
-      ? ((mrrValues[mrrValues.length - 1].value - mrrValues[0].value) /
-          mrrValues[0].value) *
+      ? ((numericValue(mrrValues[mrrValues.length - 1].value) - numericValue(mrrValues[0].value)) /
+          numericValue(mrrValues[0].value)) *
         100
       : 0;
 
   // Churn
   const churnValues = churnData.values.filter((v) => !v.incomplete);
   const latestChurn =
-    churnValues.length > 0 ? churnValues[churnValues.length - 1].value : null;
+    churnValues.length > 0 ? numericValue(churnValues[churnValues.length - 1].value) : null;
 
   // Conversion
   const convValues = conversionData.values.filter((v) => !v.incomplete);
   const latestConversion =
-    convValues.length > 0 ? convValues[convValues.length - 1].value : null;
+    convValues.length > 0 ? numericValue(convValues[convValues.length - 1].value) : null;
 
   const healthScore = [
     mrrTrend > 5 ? "🟢" : mrrTrend > 0 ? "🟡" : "🔴",
@@ -258,6 +267,12 @@ async function analyzeHealth(
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
+
+function numericValue(v: number | Record<string, number>): number {
+  if (typeof v === "number") return v;
+  const vals = Object.values(v);
+  return vals.length > 0 ? vals.reduce((a, b) => a + b, 0) : 0;
+}
 
 function today(): string {
   return new Date().toISOString().split("T")[0];
