@@ -1,18 +1,24 @@
 # revenuecat-mcp
 
-**The analytics layer RevenueCat's official MCP is missing.**
+An optional third-party, legacy stdio wrapper for RevenueCat's Charts API.
 
-RevenueCat's [official MCP server](https://www.revenuecat.com/blog/company/introducing-revenuecat-mcp/) (launched July 2025) gives you 26 tools to *build* your subscription infrastructure from the terminal. It has zero tools to *understand* it.
+This project is not affiliated with or endorsed by RevenueCat. The current
+[official RevenueCat MCP server](https://www.revenuecat.com/docs/tools/mcp) supports
+analytics, including chart data, chart options, overview metrics and experiment
+results, as documented in its [tools reference](https://www.revenuecat.com/docs/tools/mcp/tools-reference).
+Use the official connector when it covers your needs; the earlier claim that it had
+no analytics tools is obsolete.
 
-This server fills that gap. It connects [RevenueCat's Charts API](https://www.revenuecat.com/docs/api-v2) to any AI agent — Claude, Cursor, Windsurf, and more — so instead of logging into the dashboard, you can ask:
+This package connects [RevenueCat's Charts API](https://www.revenuecat.com/docs/api-v2)
+to compatible local MCP clients. Its four tools request API data and format a report.
+Current authenticated API behavior has not been reverified in this documentation
+review. Example questions include:
 
 > *"How is my MRR trending over the last 6 months?"*
 > *"What's my current churn rate and is it healthy?"*
 > *"Run a full subscription health check."*
 
-And get a real answer, backed by live data.
-
-> **Why this matters now:** RevenueCat's 2026 State of Subscription Apps found AI-powered apps earn **41% more per user** but churn **30% faster**. If you're building an AI app, analytics visibility isn't optional.
+Results depend on the supplied project's permissions and the upstream API response.
 
 ---
 
@@ -21,17 +27,21 @@ And get a real answer, backed by live data.
 | Tool | What it does |
 |------|-------------|
 | `get_overview` | Snapshot of all key metrics: MRR, revenue, subscribers, trials, new customers |
-| `get_chart` | Time-series data for any of 21 available charts |
+| `get_chart` | Requests time-series data for a named chart; availability follows the upstream API |
 | `get_chart_options` | Discover available resolutions, segments, and filters for a chart |
-| `analyze_subscription_health` | Full health report: MRR trend + churn + trial conversion with 🟢🟡🔴 indicators |
+| `analyze_subscription_health` | Formats MRR, churn and trial-conversion data with fixed heuristic indicators |
 
-### Available Charts (21 total)
+### Chart identifiers listed by this package
 
 `mrr` · `revenue` · `actives` · `arr` · `churn` · `conversion_to_paying` ·
 `customers_new` · `ltv_per_customer` · `ltv_per_paying_customer` · `mrr_movement` ·
 `refund_rate` · `subscription_retention` · `subscription_status` · `trials` ·
 `trials_movement` · `trials_new` · `actives_movement` · `actives_new` ·
 `customers_active` · `trial_conversion_rate` · `cohort_explorer`
+
+These are identifiers named in the source, not a current compatibility guarantee for
+every RevenueCat project. Health colors and thresholds are package heuristics, not
+a validated diagnosis or a prediction of business results.
 
 ---
 
@@ -40,6 +50,19 @@ And get a real answer, backed by live data.
 - Node.js 18+
 - A RevenueCat V2 secret key with `charts_metrics:charts:read` and `charts_metrics:overview:read` permissions
 - Your RevenueCat project ID (find it in **Project Settings → API Keys**)
+
+### Credential handling in this package
+
+Every tool requires `api_key` as an ordinary tool argument. The setup examples below
+only launch the server; they do not configure credentials through environment
+variables or OAuth. A key supplied in a tool call is exposed to the MCP host and may
+enter the model context or the host's logs/history. Do not paste a secret into chat
+to try this package. Prefer the official connector's documented authentication when
+it meets your needs.
+
+This is a disclosure of the existing implementation, not a credential-handling fix.
+The npm package is `revenuecat-analytics-mcp@1.0.2`; its MCP initialization currently
+reports `revenuecat-mcp` version `1.0.0`.
 
 ---
 
@@ -103,6 +126,9 @@ What's my churn rate segmented by country?
 → Calls get_chart(chart_name="churn", segment="country")
 ```
 
+These describe tool selection, not a secure credential setup. Do not put real keys
+in these prompts. The current API-key argument requirement is described above.
+
 ---
 
 ## Getting Your Credentials
@@ -132,7 +158,7 @@ The server acts as a translation layer: it takes natural-language-adjacent tool 
 
 ## Rate Limits
 
-RevenueCat's Charts API has a 5 requests/minute rate limit on the charts domain. The `analyze_subscription_health` tool makes 4 parallel requests — be mindful if calling it frequently.
+RevenueCat's [API v2 documentation](https://www.revenuecat.com/docs/api-v2#section/Rate-Limit) lists 25 requests per minute for Charts & Metrics as of October 28, 2026. Follow the actual response headers and any current account limits. The `analyze_subscription_health` implementation starts four requests in parallel; this review did not test authenticated rate-limit handling.
 
 ---
 
