@@ -1,4 +1,4 @@
-# Unpublished X drafts — October29,2026
+# Unpublished X drafts — October 29, 2026
 
 These replace obsolete launch copy. Do not reuse claims that RevenueCat's official MCP lacks analytics, fixed health scores, or unverified named-customer results. Publishing these posts requires the owner's separate messaging authorization.
 
@@ -8,7 +8,7 @@ RevenueCat analytics via MCP: start with RevenueCat's official connector. Our op
 
 ## Draft2
 
-A key in a tool argument can enter model context or host history. RevenueCat Analytics MCP2 removes that contract: configure the key/project in the trusted host environment. Prior disclosures still need key rotation. Tested with fictional data; no customer-account certification.
+A key in a tool argument can enter model context or host history. RevenueCat Analytics MCP 2 removes that contract: configure the key/project in the trusted host environment. Prior disclosures still need key rotation. Tested with fictional data; no customer-account certification.
 
 ## Draft3
 

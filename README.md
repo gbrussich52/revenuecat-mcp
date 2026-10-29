@@ -4,7 +4,7 @@ A third-party, read-only **local stdio** adapter for RevenueCat's Charts API. It
 
 ## Version 2: credentials stay in server configuration
 
-This source targets **2.0.0**, a breaking security release. Check registry availability with `npm view revenuecat-analytics-mcp version` before selecting an npm release; **1.x still accepts keys in tool arguments and is not recommended**. A local source build uses the repaired implementation described here.
+This source targets **2.0.1**, a breaking security release. Check registry availability with `npm view revenuecat-analytics-mcp version` before selecting an npm release; **1.x still accepts keys in tool arguments and is not recommended**. A local source build uses the repaired implementation described here.
 
 Set `REVENUECAT_API_KEY` and `REVENUECAT_PROJECT_ID` through your MCP host's trusted local environment/secret settings. The process is restricted to that configured project. No tool accepts an API key or project selector. Never paste a key into chat, tool arguments, GitHub, or a support request. Use a V2 key with only the read permissions needed: `charts_metrics:charts:read` and `charts_metrics:overview:read`.
 

@@ -32,4 +32,8 @@ old five-request rate-limit claim against the current primary API documentation.
 
 ## 2026-10-29 — Retire stale launch drafts
 
-The repository's older blog/X/campaign drafts still claimed the official connector lacked analytics, promoted fixed health scores and proposed unverified named-customer results. Replace them with current optional-adapter positioning and tested2.0 behavior/limitations. No posts or messages were sent. Runtime and2.0.0release bytes are unchanged.
+The repository's older blog/X/campaign drafts still claimed the official connector lacked analytics, promoted fixed health scores and proposed unverified named-customer results. Replace them with current optional-adapter positioning and tested 2.0 behavior/limitations. No posts or messages were sent. Runtime and2.0.0release bytes are unchanged.
+
+## 2.0.1 — 2026-10-29
+
+Make future releases reproducible: a tag/version-checked GitHub workflow builds, runs fixture tests and the native audit, then publishes with package-scoped npm trusted publishing and provenance. It uses no stored npm token. Repository metadata supports source verification; prepack rebuilds the runtime. This workflow requires a separately approved npm publisher binding and does not grant itself account access. Runtime behavior matches the tested 2.0.0 security repair. The patch version preserves the existing 2.0.0 tag and artifact rather than rewriting either.
