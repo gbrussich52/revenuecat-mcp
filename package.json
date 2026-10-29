@@ -1,7 +1,7 @@
 {
   "name": "revenuecat-analytics-mcp",
-  "version": "2.0.0",
-  "description": "MCP server for RevenueCat Charts API — ask your AI agent about MRR, churn, revenue, and more",
+  "version": "2.0.1",
+  "description": "MCP server for RevenueCat Charts API \u2014 ask your AI agent about MRR, churn, revenue, and more",
   "main": "dist/index.js",
   "bin": {
     "revenuecat-analytics-mcp": "dist/index.js"
@@ -10,7 +10,8 @@
     "build": "tsc",
     "dev": "npm run build && node dist/index.js",
     "start": "node dist/index.js",
-    "test": "npm run build && node --test dist/test/*.test.js"
+    "test": "npm run build && node --test dist/test/*.test.js",
+    "prepack": "npm run build"
   },
   "keywords": [
     "mcp",
@@ -37,5 +38,9 @@
     "!dist/test",
     "README.md",
     "CHANGELOG.md"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gbrussich52/revenuecat-mcp.git"
+  }
 }

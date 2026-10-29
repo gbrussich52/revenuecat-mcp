@@ -20,7 +20,7 @@ import {
   Tool,
 } from "@modelcontextprotocol/sdk/types.js";
 
-export const VERSION = "2.0.0";
+export const VERSION = "2.0.1";
 const RC_API_BASE = "https://api.revenuecat.com/v2";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
