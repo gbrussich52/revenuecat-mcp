@@ -1,6 +1,6 @@
 {
   "name": "revenuecat-analytics-mcp",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "MCP server for RevenueCat Charts API — ask your AI agent about MRR, churn, revenue, and more",
   "main": "dist/index.js",
   "bin": {
@@ -8,16 +8,34 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node src/index.ts",
-    "start": "node dist/index.js"
+    "dev": "npm run build && node dist/index.js",
+    "start": "node dist/index.js",
+    "test": "npm run build && node --test dist/test/*.test.js"
   },
-  "keywords": ["mcp", "revenuecat", "subscription", "analytics", "mrr", "revenue", "ai-agent"],
+  "keywords": [
+    "mcp",
+    "revenuecat",
+    "subscription",
+    "analytics",
+    "mrr",
+    "revenue",
+    "ai-agent"
+  ],
   "license": "MIT",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.0"
+    "@modelcontextprotocol/sdk": "1.32.2"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0"
-  }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist",
+    "!dist/test",
+    "README.md",
+    "CHANGELOG.md"
+  ]
 }
