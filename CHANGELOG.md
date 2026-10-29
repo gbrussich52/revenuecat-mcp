@@ -29,3 +29,7 @@ account, key or private subscription data was used.
 The review also removes an unqualified report statistic, describes the listed chart
 IDs and health thresholds as unverified identifiers/heuristics, and corrects the
 old five-request rate-limit claim against the current primary API documentation.
+
+## 2026-10-29 — Retire stale launch drafts
+
+The repository's older blog/X/campaign drafts still claimed the official connector lacked analytics, promoted fixed health scores and proposed unverified named-customer results. Replace them with current optional-adapter positioning and tested2.0 behavior/limitations. No posts or messages were sent. Runtime and2.0.0release bytes are unchanged.
